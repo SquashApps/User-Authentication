@@ -1,4 +1,4 @@
-#UserAuthentication System
+### UserAuthentication System
 
 The challenge is to create a user authentication system without using any NPM module.
 
@@ -16,7 +16,7 @@ The challenge is to create a user authentication system without using any NPM mo
 
 * The database owner (You) cannot store plaintext password or SHA256-hashed password in your DB.
 
-### KeyPoints to rember
+### KeyPoints to remember
 
 * Add an email Address in the mail service file to send verification link to other accounts.
 
