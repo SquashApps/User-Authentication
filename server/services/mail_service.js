@@ -27,8 +27,9 @@ let MailServices = {
         };
 
         transporter.sendMail(mailOptions, function (err, info) {
-            if (err)
+            if (err){
                 console.error(err)
+            }
         });
     }
 }
