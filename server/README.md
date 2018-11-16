@@ -18,6 +18,8 @@ The challenge is to create a user authentication system without using any NPM mo
 
 ### KeyPoints to remember
 
-* Add an email Address in the mail service file to send verification link to other accounts.
+* Add an email Address in the constant file to send verification link to other accounts.
 
 * Also enable Less secure Apps Authentication settings for sending mail using node mailer in local.
+
+
