@@ -1,22 +1,22 @@
 
 const UserModel = require('../models/user_model')
 const lodash = require("lodash");
-const async = require("async");
 const EncryptionService = require('./encryption_service');
 const MailService = require('./mail_service');
+const config = require('../constant')
 
 let UserService = {
     // creating a new user
-    createUser: async(body) => {
-        return new Promise(async(resolve, reject) => {
-            let saltAndHash =  await EncryptionService.saltHashPassword(body.password);
+    createUser: async (body) => {
+        return new Promise(async (resolve, reject) => {
+            let saltAndHash = await EncryptionService.saltHashPassword(body.password);
             UserModel.findOneAndUpdate({ email: body.email },
                 {
                     $set: {
                         email: body.email,
                         name: body.name,
                         password: saltAndHash.passwordHash,
-                        salt:saltAndHash.salt
+                        salt: saltAndHash.salt
                     }
                 },
                 { new: true, upsert: true }
@@ -32,7 +32,6 @@ let UserService = {
         })
     },
 
-
     // check the existing user
     checkExistingUser: (body) => {
         return new Promise((resolve, reject) => {
@@ -45,7 +44,7 @@ let UserService = {
                         reject(err);
                     }
                     else {
-                        reject('existing user');
+                        reject(config.EXISTIG_USER);
                     }
                 })
         })
@@ -62,9 +61,7 @@ let UserService = {
                     reject(err);
                 })
         })
-
     }
-
 }
 
 module.exports = UserService;

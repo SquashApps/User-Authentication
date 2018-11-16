@@ -1,8 +1,9 @@
-const VerificationService = require('../services/verfication_service');
+const VerificationService = require('../services/verification_service');
+const config = require('../constant');
 export const verifyUser = (req, res)=>{
     VerificationService.verifyUser(req.params.id)
     .then(()=>{
-        res.redirect('http://localhost:8081/#/verify')
+        res.redirect(config.REDIRECT_URL)
     })
     .catch((err)=>{
         res.status(500).send(err);

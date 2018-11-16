@@ -31,12 +31,13 @@
       required
     ></v-text-field>
     <v-btn
+      class="button"
       :disabled="!valid"
       @click="submit"
     >
       submit
     </v-btn>
-    <v-btn @click="clear">clear</v-btn>
+    <v-btn class="button" @click="clear">clear</v-btn>
   </v-form>
   <v-dialog></v-dialog>
   </div>
@@ -112,11 +113,14 @@ export default {
 .container{
   width:40%;
   background: white;
-  /* border: 1px solid black; */
   border-radius: 19px;
   box-shadow: 0 10px 6px -6px #777;
   flex:none !important;
-  padding:68px !important;
+  padding:20px !important;
+}
+
+.button{
+ float:right;
 }
 
 .theme--light.v-btn:not(.v-btn--icon):not(.v-btn--flat){
@@ -125,4 +129,3 @@ export default {
   background-color: #38b93c;
 }
 </style>
-<!-- Add "scoped" attribute to limit CSS to this component only -->

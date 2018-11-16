@@ -1,10 +1,9 @@
 let mongoose  = require('mongoose');
 
 let userSchema = new mongoose.Schema({
-    user: {type: mongoose.Schema.ObjectId, ref: 'User'},
-    name: {type: String},
-    email: {type: String},
-    password: {type: String},
+    name: {type: String },
+    email: {type: String, required:true},
+    password: {type: String, required:true},
     isVerified:{type:Boolean, default:false},
     salt:{type:String}
 }, {strict: true});

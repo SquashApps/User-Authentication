@@ -32,7 +32,7 @@ export default {
 
 <style scoped>
 form.v-form {
-    padding: 68px;
+    padding: 20px;
 }
 .layout.text-xs-center.row{
     display:flex;

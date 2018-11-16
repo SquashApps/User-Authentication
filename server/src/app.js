@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 // Express configuration
 const app = express()
+const config = require('../constant');
 const apiRoutes = {
     user: require('./user'),
     login: require('./login'),
@@ -14,7 +15,7 @@ const apiRoutes = {
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
+    res.setHeader('Access-Control-Allow-Origin', config.CROSS_ORIGIN_ACCESS_URL);
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -36,16 +37,16 @@ app.listen(8080)
 
 // Mongoose configuration
 
-mongoose.connect('mongodb://localhost:27017/Project',{useNewUrlParser: true});
+mongoose.connect('mongodb://localhost:27017/Project', { useNewUrlParser: true });
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
-db.once("open", function(callback){
+db.once("open", function (callback) {
     console.log("Connection Established Succeeded");
 });
 
-app.post('/signup',apiRoutes.user.createUser);
+app.post('/signup', apiRoutes.user.createUser);
 
-app.post('/login',apiRoutes.login.entryCheck);
+app.post('/login', apiRoutes.login.entryCheck);
 
-app.get('/verify/:id',apiRoutes.verify.verifyUser);
+app.get('/verify/:id', apiRoutes.verify.verifyUser);
 
