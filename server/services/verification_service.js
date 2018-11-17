@@ -1,4 +1,5 @@
 const UserModel = require('../models/user_model');
+
 let VerificationService = {
     /**
      * Updates the mail status of the user.

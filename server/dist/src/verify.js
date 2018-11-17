@@ -3,11 +3,21 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var VerificationService = require('../services/verfication_service');
+var VerificationService = require('../services/verification_service');
+var config = require('../constant');
+var mongoose = require('mongoose');
+
 var verifyUser = exports.verifyUser = function verifyUser(req, res) {
-    VerificationService.verifyUser(req.params.id).then(function () {
-        res.redirect('http://localhost:8081/#/verify');
+    var id = req.params.id;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        res.sendStatus(400);
+        return;
+    }
+    VerificationService.verifyUser(id).then(function () {
+        res.redirect(config.REDIRECT_URL);
+        return;
     }).catch(function (err) {
-        res.status(500).send(err);
+        res.status(500).json({ verfication: 'failed', error: err });
     });
 };

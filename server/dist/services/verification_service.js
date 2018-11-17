@@ -1,6 +1,7 @@
 'use strict';
 
 var UserModel = require('../models/user_model');
+
 var VerificationService = {
     /**
      * Updates the mail status of the user.

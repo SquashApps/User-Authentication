@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const atob = require('atob')
+
 let EncryptionService = {
     genRandomString: (length) => {    // generated a random string of size 16
         try {
@@ -8,7 +9,7 @@ let EncryptionService = {
                 .slice(0, length);
         }
         catch (err) {
-            console.error('Error in generating Random string', err);
+            console.error('Random should be random', err);
         }
     },
 
@@ -27,7 +28,7 @@ let EncryptionService = {
             };
         }
         catch (err) {
-            console.error('Error in sha512', err);
+            console.error('Error in creating a hash', err);
         }
     },
     /**
@@ -53,7 +54,7 @@ let EncryptionService = {
             return passwordData;
         }
         catch (err) {
-            console.error('Error in SaltHashExistingUserPassword functionality', err);
+            console.error('Error in salting password', err);
         }
     }
 

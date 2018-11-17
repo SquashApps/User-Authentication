@@ -3,9 +3,11 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var helmet = require('helmet');
 
 // Express configuration
 var app = express();
+var config = require('../constant');
 var apiRoutes = {
     user: require('./user'),
     login: require('./login'),
@@ -15,7 +17,7 @@ var apiRoutes = {
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
+    res.setHeader('Access-Control-Allow-Origin', config.CROSS_ORIGIN_ACCESS_URL);
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -31,7 +33,9 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use(helmet());
 app.use(bodyParser.json());
+
 app.listen(8080);
 
 // Mongoose configuration

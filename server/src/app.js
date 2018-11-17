@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
+const helmet = require('helmet');
 
 
 // Express configuration
@@ -31,9 +32,10 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use(bodyParser.json())
-app.listen(8080)
+app.use(helmet());
+app.use(bodyParser.json());
 
+app.listen(8080);
 
 // Mongoose configuration
 

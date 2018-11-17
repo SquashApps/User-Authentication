@@ -6,7 +6,7 @@
     <v-text-field
       v-model="name"
       :rules="nameRules"
-      :counter="10"
+      :counter="15"
       label="Name"
       required
     ></v-text-field>
@@ -51,18 +51,18 @@ export default {
     valid: true,
     name: '',
     nameRules: [
-      v => !!v || 'Name is required',
-      v => (v && v.length <= 10) || 'Name must be less than 10 characters'
+      v => !!v || constants.NAME_REQUIRED,
+      v => (v && v.length <= 15) || constants.NAME_REQUIRED_TEXT
     ],
     email: '',
     emailRules: [
-      v => !!v || 'E-mail is required',
-      v => constants.EMAIL_VALIDATOR.test(v) || 'E-mail must be valid'
+      v => !!v || constants.EMAIL_REQUIRED,
+      v => constants.EMAIL_VALIDATOR.test(v) || constants.EMAIL_REQUIRED_TEXT
     ],
     password: '',
     passwordRules: [
-      v => !!v || 'Password is required',
-      v => constants.REGEX_PASSWORD.test(v) || 'Password is required and it should not be less than 8 characters'
+      v => !!v || constants.PASSWORD_REQUIRED,
+      v => constants.REGEX_PASSWORD.test(v) || constants.PASSWORD_REQUIRED_TEXT
     ],
     confirmPassword: ''
   }),
@@ -79,7 +79,7 @@ export default {
         .then((response) => {
           this.$modal.show('dialog', {
             title: 'Verification Mail',
-            text: 'A mail has been sent to your corresponding email address. Click on that mail to verify your identity.',
+            text: constants.MAIL_VERIFIED_TEXT,
             buttons: [
               {
                 title: 'Close'

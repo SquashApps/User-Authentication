@@ -1,61 +1,49 @@
 
 const UserModel = require('../models/user_model')
 const lodash = require("lodash");
-const EncryptionService = require('./encryption_service');
 const MailService = require('./mail_service');
 const config = require('../constant')
 
 let UserService = {
     // creating a new user
-    createUser: async (body) => {
-        return new Promise(async (resolve, reject) => {
-            let saltAndHash = await EncryptionService.saltHashPassword(body.password);
-            UserModel.findOneAndUpdate({ email: body.email },
-                {
-                    $set: {
-                        email: body.email,
-                        name: body.name,
-                        password: saltAndHash.passwordHash,
-                        salt: saltAndHash.salt
-                    }
-                },
-                { new: true, upsert: true }
-            ).exec((err, data) => {
+    createUser: (userDetails) => {
+        return new Promise((resolve, reject) => {
+            let newUser = new UserModel(userDetails);
+            newUser.save((err, savedUser) => {
                 if (err) {
                     reject(err);
-                }
-                else {
-                    MailService.sendMail(data);
-                    resolve(data);
+                } else {
+                    MailService.sendMail(savedUser);
+                    resolve();
                 }
             })
         })
     },
 
     // check the existing user
-    checkExistingUser: (body) => {
+    checkIfUserExists: (userDetails) => {
         return new Promise((resolve, reject) => {
-            UserModel.find({ email: body.email },
-                (err, docs) => {
-                    if (lodash.isEmpty(docs)) {
-                        resolve(body);
+            UserModel.find({ email: userDetails.email },
+                (err, user) => {
+                    if (lodash.isEmpty(user)) {
+                        resolve();
                     }
                     else if (err) {
                         reject(err);
                     }
                     else {
-                        reject(config.EXISTIG_USER);
+                        reject(config.EXISTING_USER);
                     }
                 })
         })
     },
 
-    checkUser: (body) => {
+    createUserIfNotExisting: (userDetails) => {
         return new Promise((resolve, reject) => {
-            UserService.checkExistingUser(body)
-                .then((body) => {
-                    UserService.createUser(body)
-                    resolve();
+            UserService.checkIfUserExists(userDetails)
+                .then(() => {
+                    UserService.createUser(userDetails)
+                        .then(() => resolve())
                 })
                 .catch((err) => {
                     reject(err);

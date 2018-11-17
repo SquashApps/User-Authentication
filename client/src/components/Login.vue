@@ -33,8 +33,8 @@ export default {
     email: '',
     password: '',
     passwordRules: [
-      v => !!v || 'Password is required',
-      v => constants.REGEX_PASSWORD.test(v) || 'Password is required and it should not be less than 8 characters'
+      v => !!v || constants.PASSWORD_REQUIRED,
+      v => constants.REGEX_PASSWORD.test(v) || constants.PASSWORD_REQUIRED_TEXT
     ]
   }),
   methods: {

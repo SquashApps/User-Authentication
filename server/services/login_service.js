@@ -7,9 +7,9 @@ let LoginService = {
     /**
      * Verifiy whether the user is a valid user
      */
-    checkUserVerification: (body) => {
+    checkIfUserIsVerified: (email, password) => {
         return new Promise((resolve, reject) => {
-            UserModel.findOne({ email: body.email, isVerified: true },
+            UserModel.findOne({ email: email, isVerified: true },
                 ((err, doc) => {
                     if (lodash.isEmpty(doc)) {
                         reject(config.INVALID_USER);
@@ -18,7 +18,7 @@ let LoginService = {
                         reject(err);
                     }
                     else {
-                        LoginService.checkPasswordMatch(body.password, doc)
+                        LoginService.checkIfPasswordsMatch(password, doc)
                             .then((message) => resolve(message))
                             .catch((err) => reject(err))
                     }
@@ -28,7 +28,7 @@ let LoginService = {
     /**
      * check whether the signup password matches with the login one
      */
-    checkPasswordMatch: async (password, doc) => {
+    checkIfPasswordsMatch: async (password, doc) => {
         return new Promise(async (resolve, reject) => {
             let passwordHash = await EncryptionService.saltHashExistingUserPassword(password, doc.salt);
             if (passwordHash.passwordHash === doc.password) {

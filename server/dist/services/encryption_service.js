@@ -2,13 +2,14 @@
 
 var crypto = require('crypto');
 var atob = require('atob');
+
 var EncryptionService = {
     genRandomString: function genRandomString(length) {
         // generated a random string of size 16
         try {
             return crypto.randomBytes(Math.ceil(length / 2)).toString('hex').slice(0, length);
         } catch (err) {
-            console.error('genRandomString', err);
+            console.error('Random should be random', err);
         }
     },
 
@@ -26,7 +27,7 @@ var EncryptionService = {
                 passwordHash: value
             };
         } catch (err) {
-            console.error('sha512', err);
+            console.error('Error in creating a hash', err);
         }
     },
     /**
@@ -39,7 +40,7 @@ var EncryptionService = {
             var passwordData = EncryptionService.sha512(userpassword, salt);
             return passwordData;
         } catch (err) {
-            console.error('SaltAndHashPassword', err);
+            console.error('Error in SaltAndHashPassword', err);
         }
     },
     /**
@@ -50,7 +51,7 @@ var EncryptionService = {
             var passwordData = EncryptionService.sha512(userpassword, salt);
             return passwordData;
         } catch (err) {
-            console.error('SaltHashExistingUserPassword', err);
+            console.error('Error in salting password', err);
         }
     }
 
